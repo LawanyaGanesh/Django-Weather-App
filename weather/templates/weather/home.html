@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .weather-container {
+            background: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 70%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .weather-info {
+            margin-top: 25px;
+        }
+
+        .temperature {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        .city {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .error {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="weather-container">
+
+    <h1>Weather App</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="city"
+            placeholder="Enter city"
+        >
+
+        <button type="submit">Search</button>
+    </form>
+
+
+    {% if error %}
+
+        <p class="error">{{ error }}</p>
+
+    {% endif %}
+
+
+    {% if city and not error %}
+
+        <div class="weather-info">
+
+            <div class="city">
+                {{ city }}
+            </div>
+
+            <div class="temperature">
+                {{ current_temp|floatformat:1 }} °C
+            </div>
+
+            <p>
+                Humidity: {{ humidity }}%
+            </p>
+
+            <p>
+                Weather: {{ weather_des }}
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+
